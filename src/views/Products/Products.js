@@ -41,24 +41,16 @@
     } from "@coreui/react"
 
     import CIcon from "@coreui/icons-react"
-    import {
-    cilPencil,
-    cilTrash,
-    cilMagnifyingGlass,
-    } from "@coreui/icons"
+    import { cilPencil, cilTrash, cilMagnifyingGlass } from "@coreui/icons"
     import { cibAddthis } from "@coreui/icons"
 
-
-
     const Products = () => {
-
     // ---------------------- TOAST ---------------------- //
     const [toasts, setToasts] = useState([])
 
     const showToast = (type, message) => {
-        setToasts(prev => [...prev, { id: Date.now(), type, message }])
+        setToasts((prev) => [...prev, { id: Date.now(), type, message }])
     }
-
 
     // ---------------------- MODAL ---------------------- //
     const [modalVisible, setModalVisible] = useState(false)
@@ -73,13 +65,11 @@
         setModalVisible(true)
     }
 
-
     // ---------------------- FILTROS ---------------------- //
     const [searchTerm, setSearchTerm] = useState("")
     const [categoryFilter, setCategoryFilter] = useState("")
     const [statusFilter, setStatusFilter] = useState("")
     const [yearFilter, setYearFilter] = useState("")
-
 
     // ---------------------- DATA ---------------------- //
     const productData = [
@@ -89,6 +79,8 @@
         FechaIngreso: "2024-05-12",
         Categoria: "Tecnología",
         Estatus: "Disponible",
+        Cantidad: 40,
+        Precio_Unit: "850$",
         },
         {
         ID: 2,
@@ -96,6 +88,8 @@
         FechaIngreso: "2025-01-18",
         Categoria: "Mobiliario",
         Estatus: "Agotado",
+        Cantidad: 0,
+        Precio_Unit: "320$",
         },
         {
         ID: 3,
@@ -103,10 +97,10 @@
         FechaIngreso: "2025-02-03",
         Categoria: "Tecnología",
         Estatus: "Disponible",
+        Cantidad: 120,
+        Precio_Unit: "25$",
         },
     ]
-
-
 
     // ---------------------- ACCIONES ---------------------- //
     const saveItem = () => {
@@ -124,15 +118,11 @@
         setModalVisible(false)
     }
 
-
-
     return (
         <>
-
         <h1>Gestión de Productos</h1>
 
         <CContainer>
-
             {/* ---------- RESUMEN ---------- */}
             <CCard className="mb-4">
             <CCardBody>
@@ -140,11 +130,9 @@
             </CCardBody>
             </CCard>
 
-
             {/* ---------- TABLA ---------- */}
             <CCard>
             <CCardBody>
-
                 {/* Barra superior */}
                 <div className="d-flex justify-content-between align-items-center mb-4">
                 <h4>Listado de Productos</h4>
@@ -155,12 +143,9 @@
                 </CButton>
                 </div>
 
-
                 {/* -------- FILTROS -------- */}
                 <CForm className="mb-4">
                 <CRow className="g-3 align-items-end">
-
-                    {/* Buscar */}
                     <CCol xs={12} md={3}>
                     <CFormLabel>Buscar</CFormLabel>
                     <CFormInput
@@ -170,7 +155,6 @@
                     />
                     </CCol>
 
-                    {/* Categoría */}
                     <CCol xs={12} md={3}>
                     <CFormLabel>Categoría</CFormLabel>
                     <CFormSelect
@@ -184,7 +168,6 @@
                     </CFormSelect>
                     </CCol>
 
-                    {/* Estatus */}
                     <CCol xs={12} md={3}>
                     <CFormLabel>Estatus</CFormLabel>
                     <CFormSelect
@@ -197,7 +180,6 @@
                     </CFormSelect>
                     </CCol>
 
-                    {/* Año */}
                     <CCol xs={12} md={3}>
                     <CFormLabel>Año ingreso</CFormLabel>
                     <CFormSelect
@@ -216,82 +198,85 @@
                         <CIcon className="ms-2" icon={cilMagnifyingGlass} />
                     </CButton>
                     </CCol>
-
                 </CRow>
                 </CForm>
 
-
                 {/* -------- TABLA -------- */}
                 <CTable hover align="middle" className="border">
-                <CTableHead>
+                <CTableHead color="light">
                     <CTableRow>
-                    <CTableHeaderCell>ID</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Nombre</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">ID</CTableHeaderCell>
+                    <CTableHeaderCell>Nombre</CTableHeaderCell>
                     <CTableHeaderCell>Fecha Ingreso</CTableHeaderCell>
                     <CTableHeaderCell>Categoría</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Estatus</CTableHeaderCell>
-                    <CTableHeaderCell>Acciones</CTableHeaderCell>
+                    <CTableHeaderCell>Cantidad</CTableHeaderCell>
+                    <CTableHeaderCell>Precio Unitario</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Acciones</CTableHeaderCell>
                     </CTableRow>
                 </CTableHead>
 
                 <CTableBody>
                     {productData.map((item, i) => (
                     <CTableRow key={i}>
+                        <CTableDataCell className="text-center">{item.ID}</CTableDataCell>
 
-                        <CTableDataCell>{item.ID}</CTableDataCell>
-
-                        <CTableDataCell className="text-center fw-semibold">
-                        {item.Nombre}
-                        </CTableDataCell>
+                        <CTableDataCell>{item.Nombre}</CTableDataCell>
 
                         <CTableDataCell>{item.FechaIngreso}</CTableDataCell>
 
                         <CTableDataCell>{item.Categoria}</CTableDataCell>
 
-                        <CTableDataCell className="text-center">{item.Estatus}</CTableDataCell>
+                        <CTableDataCell className="text-center">
+                        <span
+                            className={`badge ${
+                            item.Estatus === "Disponible" ? "bg-success" : "bg-danger"
+                            }`}
+                        >
+                            {item.Estatus}
+                        </span>
+                        </CTableDataCell>
 
+                        <CTableDataCell>{item.Cantidad}</CTableDataCell>
 
-                        <CTableDataCell>
+                        <CTableDataCell>{item.Precio_Unit}</CTableDataCell>
+
+                        <CTableDataCell className="text-center">
                         <CButtonGroup>
-                            <CButton color="primary" size="sm"
+                            <CButton
+                            size="sm"
+                            color="primary"
                             onClick={() => openModal("edit", item)}
                             >
                             Editar
-                            <CIcon className="ms-2" icon={cilPencil} />
+                            <CIcon icon={cilPencil} className="ms-2" />
                             </CButton>
 
-                            <CButton color="danger" size="sm"
+                            <CButton
+                            size="sm"
+                            color="danger"
                             onClick={() => openModal("delete", item)}
                             >
                             Eliminar
-                            <CIcon className="ms-2" icon={cilTrash} />
+                            <CIcon icon={cilTrash} className="ms-2" />
                             </CButton>
                         </CButtonGroup>
                         </CTableDataCell>
-
                     </CTableRow>
                     ))}
                 </CTableBody>
                 </CTable>
-
             </CCardBody>
 
             <CCardFooter className="text-muted">
                 Mostrando {productData.length} productos
             </CCardFooter>
             </CCard>
-
         </CContainer>
 
-
-
-
-
-        {/* -----------------------------------------------------
-            TOASTER GLOBAL
-        ----------------------------------------------------- */}
+        {/* TOASTER */}
         <CToaster placement="top-end">
-            {toasts.map(t => (
+            {toasts.map((t) => (
             <CToast key={t.id} autohide delay={2600} color={t.type} visible>
                 <CToastHeader closeButton>
                 <strong>{t.message}</strong>
@@ -301,12 +286,7 @@
             ))}
         </CToaster>
 
-
-
-
-        {/* -----------------------------------------------------
-                MODAL GLOBAL
-        ----------------------------------------------------- */}
+        {/* MODAL */}
         <CModal size="lg" visible={modalVisible} onClose={() => setModalVisible(false)}>
             <CModalHeader>
             <CModalTitle>
@@ -317,37 +297,38 @@
             </CModalHeader>
 
             <CModalBody>
-
-
-            {/* ---------------- ELIMINAR ---------------- */}
+            {/* ----------- ELIMINAR ----------- */}
             {modalType === "delete" && (
                 <>
                 <h5>¿Seguro que deseas eliminar este producto?</h5>
                 <p className="fw-bold">{selectedItem?.Nombre}</p>
 
-                <CButton color="danger" onClick={deleteItem}>Eliminar</CButton>
+                <CButton color="danger" onClick={deleteItem}>
+                    Eliminar
+                </CButton>
                 </>
             )}
 
-
-            {/* ---------------- CREAR / EDITAR : MULTIPASO ---------------- */}
+            {/* ----------- CREAR / EDITAR ----------- */}
             {(modalType === "create" || modalType === "edit") && (
                 <>
                 <CNav variant="tabs">
-                    <CNavItem><CNavLink active={step === 1}>Información</CNavLink></CNavItem>
-                    <CNavItem><CNavLink active={step === 2}>Detalles</CNavLink></CNavItem>
-                    <CNavItem><CNavLink active={step === 3}>Confirmación</CNavLink></CNavItem>
+                    <CNavItem>
+                    <CNavLink active={step === 1}>Información</CNavLink>
+                    </CNavItem>
+                    <CNavItem>
+                    <CNavLink active={step === 2}>Detalles</CNavLink>
+                    </CNavItem>
+                    <CNavItem>
+                    <CNavLink active={step === 3}>Confirmación</CNavLink>
+                    </CNavItem>
                 </CNav>
 
                 <CTabContent className="mt-4">
-
-                    {/* ------- PASO 1 ------- */}
+                    {/* ------- PASO 1: INFO ------- */}
                     <CTabPane visible={step === 1}>
                     <CForm>
-                        <CFormInput
-                        label="Nombre del producto"
-                        placeholder="Ej: Laptop Dell"
-                        />
+                        <CFormInput label="Nombre del producto" placeholder="Ej: Laptop Dell" />
 
                         <CFormSelect label="Categoría">
                         <option>Tecnología</option>
@@ -361,15 +342,26 @@
                     </CForm>
                     </CTabPane>
 
-
-                    {/* ------- PASO 2 ------- */}
+                    {/* ------- PASO 2: DETALLES ------- */}
                     <CTabPane visible={step === 2}>
                     <CForm>
-
                         <CFormSelect label="Estatus">
                         <option>Disponible</option>
                         <option>Agotado</option>
                         </CFormSelect>
+
+                        <CFormInput
+                        className="mt-3"
+                        type="number"
+                        label="Cantidad"
+                        placeholder="Ej: 50"
+                        />
+
+                        <CFormInput
+                        className="mt-3"
+                        label="Precio Unitario"
+                        placeholder="Ej: 120$"
+                        />
 
                         <div className="d-flex justify-content-between mt-3">
                         <CButton color="secondary" onClick={() => setStep(1)}>
@@ -380,12 +372,10 @@
                             Siguiente
                         </CButton>
                         </div>
-
                     </CForm>
                     </CTabPane>
 
-
-                    {/* ------- PASO 3 ------- */}
+                    {/* ------- PASO 3: CONFIRMAR ------- */}
                     <CTabPane visible={step === 3}>
                     <h5 className="mb-4">Confirmar datos del producto</h5>
 
@@ -406,17 +396,12 @@
                         </CButton>
                         )}
                     </div>
-
                     </CTabPane>
-
                 </CTabContent>
                 </>
             )}
-
             </CModalBody>
         </CModal>
-
-
         </>
     )
     }

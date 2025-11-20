@@ -8,7 +8,9 @@ import {
   cilStar,
   cilPencil,
   cilSatelite,
-  cilCart
+  cilCart,
+  cilDollar,
+  cilCash
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
@@ -49,6 +51,19 @@ const _nav = [
         to: '/Pedidos',
       },
     ],
+  },
+
+  {
+    component: CNavGroup,
+    name: 'FACTURACION',
+    icon:<CIcon icon={cilCash} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name:'FACTURACION',
+        to:'/Facturacion'
+      }
+    ]
   },
 
   {

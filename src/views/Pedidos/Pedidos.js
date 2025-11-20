@@ -1,271 +1,359 @@
     import React, { useState } from 'react'
     import {
-    CAvatar,
-    CButton,
-    CButtonGroup,
     CCard,
     CCardBody,
-    CCardFooter,
     CCardHeader,
-    CProgress,
-    CRow,
-    CTable,
-    CTableBody,
-    CTableDataCell,
-    CTableHead,
-    CTableHeaderCell,
-    CTableRow,
-    CAlert,
-    CAlertHeading,
-    CToast,
-    CToastBody,
-    CToaster,
-    CToastHeader,
-    CHeader,
     CContainer,
+    CRow,
     CCol,
-    CWidgetStatsF,
     CForm,
+    CFormLabel,
     CFormInput,
     CFormSelect,
-    CFormLabel
+    CButton,
+    CTable,
+    CTableHead,
+    CTableRow,
+    CTableHeaderCell,
+    CTableBody,
+    CTableDataCell,
+    CModal,
+    CModalHeader,
+    CModalTitle,
+    CModalBody,
+    CToast,
+    CToastBody,
+    CToastHeader,
+    CToaster,
     } from '@coreui/react'
 
     import CIcon from '@coreui/icons-react'
-    import { 
-    cilUser, 
-    cilEnvelopeOpen, 
-    cilLockLocked, 
-    cilClock, 
-    cilPencil, 
-    cilTrash,
-    cilMagnifyingGlass
-    } from '@coreui/icons'
+    import { cilTrash } from '@coreui/icons'
 
-    // Importar íconos
-    import { cibAddthis } from '@coreui/icons'
+    export const Pedidos = () => {
+    // ---------------------- TOAST ---------------------- //
+    const [toasts, setToasts] = useState([])
 
-    export const PanelRRHH = () => {
-    // Función para manejar las acciones
-    const handleEdit = (item) => {
-        console.log('Editar:', item)
+    const showToast = (type, message) => {
+        setToasts((prev) => [...prev, { id: Date.now(), type, message }])
     }
 
-    const handleDelete = (item) => {
-        console.log('Eliminar:', item)
+    // ---------------------- MODAL ---------------------- //
+    const [modalVisible, setModalVisible] = useState(false)
+    const [modalType, setModalType] = useState(null)
+    const [selectedItem, setSelectedItem] = useState(null)
+
+    const openModal = (type, item = null) => {
+        setModalType(type)
+        setSelectedItem(item)
+        setModalVisible(true)
     }
 
-    // Estados para los filtros
-    const [searchTerm, setSearchTerm] = useState('')
-    const [statusFilter, setStatusFilter] = useState('')
-    const [dateFilter, setDateFilter] = useState('')
-    const [departmentFilter, setDepartmentFilter] = useState('')
+    // ---------------------- ACCIONES ---------------------- //
+    const saveItem = () => {
+        showToast("success", "Presupuesto registrado correctamente")
+        setModalVisible(false)
+    }
 
-    // Datos corregidos
-    const tableExample = [
+    const deleteItem = () => {
+        showToast("danger", "Producto eliminado correctamente")
+        setModalVisible(false)
+    }
+    
+    const updateProduct = (prod) => {
+        console.log("Producto agregado:", prod)
+        showToast("primary", "Producto agregado Correctamente")
+        setModalVisible(false)
+    }
+
+    // ----------- DATA DE PRODUCTOS PARA FILTRO ----------- //
+    const products = [
+        { ID: 1, Nombre: "Laptop HP", Categoria: "Tecnología", Estatus: "Disponible" },
+        { ID: 2, Nombre: "Escritorio Ejecutivo", Categoria: "Mobiliario", Estatus: "Agotado" },
+        { ID: 3, Nombre: "Silla giratoria", Categoria: "Oficina", Estatus: "Disponible" },
+    ]
+
+    // ----------- FILTROS ----------- //
+    const [searchTerm, setSearchTerm] = useState("");
+    const [categoryFilter, setCategoryFilter] = useState("");
+    const [statusFilter, setStatusFilter] = useState("");
+    
+    const filteredProducts = products.filter((p) => {
+        const matchesSearch =
+        p.ID.toString().includes(searchTerm.toLowerCase()) ||
+        p.Nombre.toLowerCase().includes(searchTerm.toLowerCase());
+
+        const matchesCategory =
+        categoryFilter === "" || p.Categoria === categoryFilter;
+
+        const matchesStatus =
+        statusFilter === "" || p.Estatus === statusFilter;
+
+        return matchesSearch && matchesCategory && matchesStatus;
+    });
+
+    // ---------------------- DATA PRUEBA TABLA PRINCIPAL ---------------------- //
+    const productData = [
         {
-        ID: 2,
-        Asunto: 'EJEMPLO 2, DENUNCIA',
-        FechaCreacion: '2024-11-01',
-        Estatus: 'EN PROCESO',
-        DEPARTAMENTO: 'RRHH',
-        },
-        {
-        ID: 9,
-        Asunto: 'EJEMPLO 2, FALTA',
-        FechaCreacion: '2025-10-17',
-        Estatus: 'FINALIZADO',
-        DEPARTAMENTO: 'RRHH',
-        },
-        {
-        ID: 2,
-        Asunto: 'EJEMPLO 3, Reunion',
-        FechaCreacion: '2025-10-20',
-        Estatus: 'Pendiente',
-        DEPARTAMENTO: 'RRHH',
-        },
+        id: 10,
+        producto: "[S11203LUX] ALTAVOZ",
+        categoria: "Tecnología",
+        vendedor: "Carlos SAF",
+        cantidad: 1,
+        precio: 121.55,
+        impuesto: "IVA (16%)",
+        subtotal: 121.55,
+        }
     ]
 
     return (
         <>
-
-        <h1>Resumen General</h1>
-
-
-
-
         <CContainer>
-            {/* Primera tarjeta para estadísticas */}
             <CCard className="mb-4">
+            <CCardHeader>
+                <strong>Nuevo Presupuesto</strong>
+            </CCardHeader>
+
             <CCardBody>
-                <CRow>
-                <CCol>
-                    <p>Aquí puedes agregar estadísticas o KPIs</p>
-                </CCol>
+                <CForm>
+                {/* ====================== DATOS CLIENTE ====================== */}
+                <CRow className="mb-4">
+                    <CCol md={6}>
+                    <CFormLabel>Cliente</CFormLabel>
+                    <CFormInput className="mb-3" />
+
+                    <CFormLabel>RIF</CFormLabel>
+                    <CFormInput className="mb-3" />
+
+                    <CFormLabel>Dirección de factura</CFormLabel>
+                    <CFormInput className="mb-3" />
+
+                    <CFormLabel>Dirección de entrega</CFormLabel>
+                    <CFormInput className="mb-3" />
+
+                    <CFormLabel>Sucursal</CFormLabel>
+                    <CFormInput className="mb-3" />
+                    </CCol>
+
+                    <CCol md={6}>
+                    <CFormLabel>Fecha cancelación</CFormLabel>
+                    <CFormInput type="date" className="mb-3" />
+
+                    <CFormLabel>Expiración</CFormLabel>
+                    <CFormInput type="date" className="mb-3" />
+
+                    <CFormLabel>Términos de Pago</CFormLabel>
+                    <CFormSelect className="mb-3">
+                        <option>Contado</option>
+                        <option>Crédito 15 días</option>
+                    </CFormSelect>
+
+                    <CFormLabel>Tasa</CFormLabel>
+                    <CFormInput className="mb-3" />
+
+                    <CFormLabel>Ruta de transporte</CFormLabel>
+                    <CFormInput />
+                    </CCol>
                 </CRow>
-            </CCardBody>
-            </CCard>
 
+                {/* ====================== TABLA PRODUCTO ====================== */}
+                <CCard className="mt-4">
+                    <CCardHeader>
+                    <strong>Líneas del pedido</strong>
+                    </CCardHeader>
 
-            {/* Tabla*/}
-            <CCard>
-            <CCardBody>
+                    <CCardBody>
+                    <CTable hover bordered>
+                        <CTableHead>
+                        <CTableRow>
+                            <CTableHeaderCell>ID</CTableHeaderCell>
+                            <CTableHeaderCell>Producto</CTableHeaderCell>
+                            <CTableHeaderCell>Categoría</CTableHeaderCell>
+                            <CTableHeaderCell>Vendedor</CTableHeaderCell>
+                            <CTableHeaderCell>Cantidad</CTableHeaderCell>
+                            <CTableHeaderCell>Precio Unit.</CTableHeaderCell>
+                            <CTableHeaderCell>Impuestos</CTableHeaderCell>
+                            <CTableHeaderCell>Subtotal</CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">Acciones</CTableHeaderCell>
+                        </CTableRow>
+                        </CTableHead>
 
+                        <CTableBody>
+                        {productData.map((item, index) => (
+                            <CTableRow key={index}>
+                            <CTableDataCell>{item.id}</CTableDataCell>
+                            <CTableDataCell>{item.producto}</CTableDataCell>
+                            <CTableDataCell>{item.categoria}</CTableDataCell>
+                            <CTableDataCell>{item.vendedor}</CTableDataCell>
+                            <CTableDataCell>{item.cantidad}</CTableDataCell>
+                            <CTableDataCell>{item.precio}</CTableDataCell>
+                            <CTableDataCell>{item.impuesto}</CTableDataCell>
+                            <CTableDataCell>{item.subtotal}</CTableDataCell>
 
-                <div className="d-flex justify-content-between align-items-center mb-4">
-                <h4>Gestion Administrativa</h4>
-                <CButton color="primary">
-                    Nuevo Tramite
-                    <CIcon className="ms-2" icon={cibAddthis} />
+                            <CTableDataCell className="text-center">
+                                <CButton
+                                color="danger"
+                                size="sm"
+                                onClick={() => openModal("delete", item)}
+                                >
+                                <CIcon icon={cilTrash} />
+                                </CButton>
+                            </CTableDataCell>
+                            </CTableRow>
+                        ))}
+                        </CTableBody>
+                    </CTable>
+
+                    <CButton 
+                        color="primary" 
+                        className="mt-3"
+                        onClick={() => openModal("update")}
+                    >
+                        Agregar producto
+                    </CButton>
+                    </CCardBody>
+                </CCard>
+
+                <CButton color="success" className="mt-4" onClick={() => openModal("save")}>
+                    Guardar Presupuesto
                 </CButton>
-                </div>
-
-
-
-                <CForm className="mb-4">
-                <CRow className="g-3 align-items-end">
-
-                    {/* Búsqueda */}
-                    <CCol xs={12} md={3}>
-                    <CFormLabel htmlFor="searchInput">Buscar</CFormLabel>
-                    <CFormInput
-                        id="searchInput"
-                        type="text"
-                        placeholder="Buscar por asunto..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                    </CCol>
-
-                    {/* Filtro de Estatus */}
-                    <CCol xs={12} md={3}>
-                    <CFormLabel htmlFor="statusSelect">Estatus</CFormLabel>
-                    <CFormSelect
-                        id="statusSelect"
-                        value={statusFilter}
-                        onChange={(e) => setStatusFilter(e.target.value)}
-                    >
-                        <option value="">Todos los estatus</option>
-                        <option value="EN PROCESO">En Proceso</option>
-                        <option value="FINALIZADO">Finalizado</option>
-                        <option value="PENDIENTE">Pendiente</option>
-                    </CFormSelect>
-                    </CCol>
-
-                    {/* Filtro de Fecha */}
-                    <CCol xs={12} md={3}>
-                    <CFormLabel htmlFor="dateSelect">Fecha</CFormLabel>
-                    <CFormSelect
-                        id="dateSelect"
-                        value={dateFilter}
-                        onChange={(e) => setDateFilter(e.target.value)}
-                    >
-                        <option value="">Todas las fechas</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                        <option value="recientes">Más recientes</option>
-                        <option value="antiguos">Más antiguos</option>
-                    </CFormSelect>
-                    </CCol>
-
-                    {/* Filtro de Departamento */}
-                    <CCol xs={12} md={3}>
-                    <CFormLabel htmlFor="departmentSelect">Departamento</CFormLabel>
-                    <CFormSelect
-                        id="departmentSelect"
-                        value={departmentFilter}
-                        onChange={(e) => setDepartmentFilter(e.target.value)}
-                    >
-                        <option value="">Todos los departamentos</option>
-                        <option value="RRHH">RRHH</option>
-                        <option value="Gestion Administrativa">Gestión Administrativa</option>
-                    </CFormSelect>
-                    </CCol>
-                    <CCol xs={12} md={3}>
-    
-                        <CButton color='secondary'> Buscar<CIcon className="ms-2" icon={cilMagnifyingGlass} /></CButton>
-
-                    </CCol>
-
-                </CRow>
                 </CForm>
-
-                {/* Tabla */}
-                <CTable align="middle" className="mb-0 border" hover responsive>
-                <CTableHead>
-                    <CTableRow>
-                    <CTableHeaderCell>ID</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Asunto</CTableHeaderCell>
-                    <CTableHeaderCell>Fecha de creación</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Estatus</CTableHeaderCell>
-                    <CTableHeaderCell>Departamento</CTableHeaderCell>
-                    <CTableHeaderCell>Acciones</CTableHeaderCell>
-                    </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                    {tableExample.map((item, index) => (
-                    <CTableRow key={index}>
-                        {/* ID */}
-                        <CTableDataCell>
-                        <div className="fw-semibold">{item.ID}</div>
-                        </CTableDataCell>
-
-                        {/* Asunto */}
-                        <CTableDataCell className="text-center">
-                        <div className="fw-semibold">{item.Asunto}</div>
-                        </CTableDataCell>
-
-                        {/* Fecha de creación */}
-                        <CTableDataCell>
-                        <div className="fw-semibold">{item.FechaCreacion}</div>
-                        </CTableDataCell>
-                    
-                        {/* Estatus */}
-                        <CTableDataCell className="text-center">
-                        <div className="fw-semibold">{item.Estatus}</div>
-                        </CTableDataCell>
-
-                        {/* Departamento */}
-                        <CTableDataCell>
-                        <div className="fw-semibold">{item.DEPARTAMENTO}</div>
-                        </CTableDataCell>
-
-                        {/* Acciones */}
-                        <CTableDataCell>
-                        <CButtonGroup role="group" aria-label="Acciones del producto">
-                            <CButton 
-                            color="primary" 
-                            size="sm"
-                            onClick={() => handleEdit(item)}
-                            >
-                            Editar
-                            <CIcon className="ms-2" icon={cilPencil} />
-                            </CButton>
-
-                            <CButton 
-                            color="danger" 
-                            size="sm"
-                            onClick={() => handleDelete(item)}
-                            >
-                            Eliminar
-                            <CIcon className="ms-2" icon={cilTrash} />  
-                            </CButton>
-                        </CButtonGroup>
-                        </CTableDataCell>
-                    </CTableRow>
-                    ))}
-                </CTableBody>
-                </CTable>
             </CCardBody>
-            <CCardFooter>
-                <div className="text-muted">
-                Mostrando {tableExample.length} trámites
-                </div>
-            </CCardFooter>
             </CCard>
         </CContainer>
+
+        {/* TOASTS */}
+        <CToaster placement="top-end">
+            {toasts.map((t) => (
+            <CToast key={t.id} autohide delay={2600} color={t.type} visible>
+                <CToastHeader closeButton>
+                <strong>{t.message}</strong>
+                </CToastHeader>
+                <CToastBody>Operación realizada correctamente.</CToastBody>
+            </CToast>
+            ))}
+        </CToaster>
+
+        {/* MODAL */}
+        <CModal visible={modalVisible} onClose={() => setModalVisible(false)}>
+            <CModalHeader>
+            <CModalTitle>
+                {modalType === "save" && "Guardar Presupuesto"}
+                {modalType === "delete" && "Eliminar Producto"}
+                {modalType === "update" && "Agregar Producto"}
+            </CModalTitle>
+            </CModalHeader>
+
+            <CModalBody>
+            {modalType === "save" && (
+                <>
+                <h5>¿Seguro que deseas guardar este presupuesto?</h5>
+                <CButton color="success" className="mt-3" onClick={saveItem}>
+                    Guardar
+                </CButton>
+                </>
+            )}
+
+            {modalType === "delete" && (
+                <>
+                <h5>¿Seguro que deseas eliminar este producto?</h5>
+                <p className="fw-bold">{selectedItem?.producto}</p>
+
+                <CButton color="danger" className="mt-3" onClick={deleteItem}>
+                    Eliminar
+                </CButton>
+                </>
+            )}
+
+            {modalType === "update" && (
+                <>
+                <h5 className="mb-3">¿Qué producto deseas agregar?</h5>
+
+                <CForm className="mb-4">
+                    <CRow className="g-3 align-items-end">
+                    
+                    <CCol xs={12} md={4}>
+                        <CFormLabel>Buscar (ID o Nombre)</CFormLabel>
+                        <CFormInput
+                        placeholder="Ej: 1 o Laptop"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </CCol>
+
+                    <CCol xs={12} md={4}>
+                        <CFormLabel>Categoría</CFormLabel>
+                        <CFormSelect
+                        value={categoryFilter}
+                        onChange={(e) => setCategoryFilter(e.target.value)}
+                        >
+                        <option value="">Todas</option>
+                        <option value="Tecnología">Tecnología</option>
+                        <option value="Mobiliario">Mobiliario</option>
+                        <option value="Oficina">Oficina</option>
+                        </CFormSelect>
+                    </CCol>
+
+                    <CCol xs={12} md={4}>
+                        <CFormLabel>Estatus</CFormLabel>
+                        <CFormSelect
+                        value={statusFilter}
+                        onChange={(e) => setStatusFilter(e.target.value)}
+                        >
+                        <option value="">Todos</option>
+                        <option value="Disponible">Disponible</option>
+                        <option value="Agotado">Agotado</option>
+                        </CFormSelect>
+                    </CCol>
+
+                    </CRow>
+                </CForm>
+
+                <CTable hover striped>
+                    <CTableHead>
+                    <CTableRow>
+                        <CTableHeaderCell>ID</CTableHeaderCell>
+                        <CTableHeaderCell>Nombre</CTableHeaderCell>
+                        <CTableHeaderCell>Categoría</CTableHeaderCell>
+                        <CTableHeaderCell>Estatus</CTableHeaderCell>
+                        <CTableHeaderCell>Acción</CTableHeaderCell>
+                    </CTableRow>
+                    </CTableHead>
+
+                    <CTableBody>
+                    {filteredProducts.length === 0 ? (
+                        <CTableRow>
+                        <CTableDataCell colSpan={5} className="text-center">
+                            No se encontraron productos
+                        </CTableDataCell>
+                        </CTableRow>
+                    ) : (
+                        filteredProducts.map((prod) => (
+                        <CTableRow key={prod.ID}>
+                            <CTableDataCell>{prod.ID}</CTableDataCell>
+                            <CTableDataCell>{prod.Nombre}</CTableDataCell>
+                            <CTableDataCell>{prod.Categoria}</CTableDataCell>
+                            <CTableDataCell>{prod.Estatus}</CTableDataCell>
+                            <CTableDataCell>
+                            <CButton
+                                color="primary"
+                                size="sm"
+                                onClick={() => updateProduct(prod)}
+                            >
+                                Agregar
+                            </CButton>
+                            </CTableDataCell>
+                        </CTableRow>
+                        ))
+                    )}
+                    </CTableBody>
+                </CTable>
+                </>
+            )}
+            </CModalBody>
+        </CModal>
         </>
     )
     }
 
-    export default PanelRRHH
+    export default Pedidos

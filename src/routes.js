@@ -22,13 +22,17 @@ const Users = React.lazy(() => import('./views/users/users'))
 
 const Inicio = React.lazy(() => import ('./views/Inicio/Inicio'))
 
-// Gestión Administrativa
+//PRODUCTOS
 
 const Products = React.lazy(() => import('./views/Products/Products'))
 
-//Recursos Humanos RRHH
+//PEDIDOS
 
 const Pedidos = React.lazy(() => import('./views/Pedidos/Pedidos'))
+
+//FACTURACION
+
+const Facturacion = React.lazy(() => import('./views/Facturacion/Facturacion'))
 
 //Reportes y Estadísticas
 
@@ -58,9 +62,10 @@ const routes = [
 
   //RUTAS
   {path: '/Inicio', name: 'Inicio', element: Inicio},
-  {path: '/Products', name: 'Products', element: Products}, // Gestión Administrativa
-  {path: '/Pedidos', name: 'Pedidos', element: Pedidos}, // Recursos Humanos RRHH
-  {path: '/Reports', name: 'Reports', element: Reports} // Reportes y Estadísticas
+  {path: '/Products', name: 'Products', element: Products}, // Productos
+  {path: '/Pedidos', name: 'Pedidos', element: Pedidos}, // Pedidos
+  {path: '/Reports', name: 'Reports', element: Reports}, // Reportes y Estadísticas
+  {path: '/Facturacion', name: 'Facturacion', element: Facturacion}
   //FIN RUTAS AGG
 
 
