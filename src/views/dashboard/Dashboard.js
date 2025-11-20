@@ -1,5 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
+import { useState } from 'react'
 
 import {
   CAvatar,
@@ -9,7 +10,6 @@ import {
   CCardBody,
   CCardFooter,
   CCardHeader,
-  CCol,
   CProgress,
   CRow,
   CTable,
@@ -18,370 +18,376 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CAlert,
+  CAlertHeading,
+  CToast,
+  CToastBody,
+  CToaster,
+  CToastHeader,
 } from '@coreui/react'
+
 import CIcon from '@coreui/icons-react'
+
 import {
   cibCcAmex,
   cibCcApplePay,
   cibCcMastercard,
-  cibCcPaypal,
-  cibCcStripe,
-  cibCcVisa,
-  cibGoogle,
-  cibFacebook,
-  cibLinkedin,
   cifBr,
-  cifEs,
-  cifFr,
-  cifIn,
-  cifPl,
   cifUs,
-  cibTwitter,
-  cilCloudDownload,
-  cilPeople,
-  cilUser,
-  cilUserFemale,
+  cifKr,
+  cifCn,
+  cilPencil,
+  cifIt,
+  cibAddthis,
+  cilTrash
 } from '@coreui/icons'
 
-import avatar1 from 'src/assets/images/avatars/1.jpg'
-import avatar2 from 'src/assets/images/avatars/2.jpg'
-import avatar3 from 'src/assets/images/avatars/3.jpg'
-import avatar4 from 'src/assets/images/avatars/4.jpg'
-import avatar5 from 'src/assets/images/avatars/5.jpg'
-import avatar6 from 'src/assets/images/avatars/6.jpg'
+import {
+  CModalFooter,
+  CNav,
+  CNavItem,
+  CNavLink,
+  CTabContent,
+  CTabPane,
+} from '@coreui/react'
 
-import WidgetsBrand from '../widgets/WidgetsBrand'
-import WidgetsDropdown from '../widgets/WidgetsDropdown'
-import MainChart from './MainChart'
+import { CModal, CModalBody, CModalHeader, CModalTitle } from '@coreui/react'
+import {CForm, CFormInput, CFormSelect } from '@coreui/react'
 
-const Dashboard = () => {
-  const progressExample = [
-    { title: 'Visits', value: '29.703 Users', percent: 40, color: 'success' },
-    { title: 'Unique', value: '24.093 Users', percent: 20, color: 'info' },
-    { title: 'Pageviews', value: '78.706 Views', percent: 60, color: 'warning' },
-    { title: 'New Users', value: '22.123 Users', percent: 80, color: 'danger' },
-    { title: 'Bounce Rate', value: 'Average Rate', percent: 40.15, color: 'primary' },
-  ]
 
-  const progressGroupExample1 = [
-    { title: 'Monday', value1: 34, value2: 78 },
-    { title: 'Tuesday', value1: 56, value2: 94 },
-    { title: 'Wednesday', value1: 12, value2: 67 },
-    { title: 'Thursday', value1: 43, value2: 91 },
-    { title: 'Friday', value1: 22, value2: 73 },
-    { title: 'Saturday', value1: 53, value2: 82 },
-    { title: 'Sunday', value1: 9, value2: 69 },
-  ]
 
-  const progressGroupExample2 = [
-    { title: 'Male', icon: cilUser, value: 53 },
-    { title: 'Female', icon: cilUserFemale, value: 43 },
-  ]
 
-  const progressGroupExample3 = [
-    { title: 'Organic Search', icon: cibGoogle, percent: 56, value: '191,235' },
-    { title: 'Facebook', icon: cibFacebook, percent: 15, value: '51,223' },
-    { title: 'Twitter', icon: cibTwitter, percent: 11, value: '37,564' },
-    { title: 'LinkedIn', icon: cibLinkedin, percent: 8, value: '27,319' },
-  ]
+
+
+export const Dashboard  = () => {
+
+
+      // ------------------------------
+    // ESTADOS GLOBALES
+    // ------------------------------
+
+    const [modalVisible, setModalVisible] = useState(false)
+    const [modalType, setModalType] = useState(null)  
+    const [step, setStep] = useState(1)
+    const [selectedProduct, setSelectedProduct] = useState(null)
+
+      // TOAST
+    const [toasts, setToasts] = useState([])
+
+    const showToast = (type, message) => {
+      setToasts(prev => [...prev, { type, message, id: Date.now() }])
+    }
 
   const tableExample = [
     {
-      avatar: { src: avatar1, status: 'success' },
-      user: {
-        name: 'Yiorgos Avraamu',
-        new: true,
-        registered: 'Jan 1, 2023',
-      },
-      country: { name: 'USA', flag: cifUs },
-      usage: {
-        value: 50,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'success',
-      },
-      payment: { name: 'Mastercard', icon: cibCcMastercard },
-      activity: '10 sec ago',
+      product:{name: 'Macbook Air M2', category:'Computadores'},
+      supplier:{flag:cifUs, name:'Apple'},
+      stock:{value:45, color:'primary',lastrestock: 'Nov 9 2024'},
+      payment:{icon:cibCcApplePay,cibCcAmex,cibCcMastercard},
+      price:'1,220$',
+      sales:'1,430',
+      lastsale:'30 min ago'
     },
     {
-      avatar: { src: avatar2, status: 'danger' },
-      user: {
-        name: 'Avram Tarasios',
-        new: false,
-        registered: 'Jan 1, 2023',
-      },
-      country: { name: 'Brazil', flag: cifBr },
-      usage: {
-        value: 22,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'info',
-      },
-      payment: { name: 'Visa', icon: cibCcVisa },
-      activity: '5 minutes ago',
-    },
-    {
-      avatar: { src: avatar3, status: 'warning' },
-      user: { name: 'Quintin Ed', new: true, registered: 'Jan 1, 2023' },
-      country: { name: 'India', flag: cifIn },
-      usage: {
-        value: 74,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'warning',
-      },
-      payment: { name: 'Stripe', icon: cibCcStripe },
-      activity: '1 hour ago',
-    },
-    {
-      avatar: { src: avatar4, status: 'secondary' },
-      user: { name: 'Enéas Kwadwo', new: true, registered: 'Jan 1, 2023' },
-      country: { name: 'France', flag: cifFr },
-      usage: {
-        value: 98,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'danger',
-      },
-      payment: { name: 'PayPal', icon: cibCcPaypal },
-      activity: 'Last month',
-    },
-    {
-      avatar: { src: avatar5, status: 'success' },
-      user: {
-        name: 'Agapetus Tadeáš',
-        new: true,
-        registered: 'Jan 1, 2023',
-      },
-      country: { name: 'Spain', flag: cifEs },
-      usage: {
-        value: 22,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'primary',
-      },
-      payment: { name: 'Google Wallet', icon: cibCcApplePay },
-      activity: 'Last week',
-    },
-    {
-      avatar: { src: avatar6, status: 'danger' },
-      user: {
-        name: 'Friderik Dávid',
-        new: true,
-        registered: 'Jan 1, 2023',
-      },
-      country: { name: 'Poland', flag: cifPl },
-      usage: {
-        value: 43,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'success',
-      },
-      payment: { name: 'Amex', icon: cibCcAmex },
-      activity: 'Last week',
+      product:{name: 'Samsung S25 ULTRA', category:'Celulares'},
+      supplier:{flag:cifKr, name:'Samsung'},
+      stock:{value:30, color:'warning',lastrestock: 'Jun 28 2025'},
+      payment:{icon:cibCcApplePay,cibCcAmex,cibCcMastercard},
+      price:'1,000$',
+      sales:'1,400',
+      lastsale:'one week ago'
     },
   ]
 
-  return (
+    // ---------------------------------
+  // ABRIR MODAL (crear, editar, eliminar)
+  // ---------------------------------
+
+  const openModal = (type, product = null) => {
+    setModalType(type)
+    setSelectedProduct(product)
+    setStep(1)
+    setModalVisible(true)
+  }
+
+    // ---------------------------------
+  // GUARDAR NUEVO PRODUCTO
+  // ---------------------------------
+
+  const saveProduct = () => {
+    showToast("success", "Producto guardado correctamente")
+    setModalVisible(false)
+  }
+
+    // ---------------------------------
+  // EDITAR PRODUCTO
+  // ---------------------------------
+  const updateProduct = () => {
+    showToast("primary", "Producto actualizado correctamente")
+    setModalVisible(false)
+  }
+
+    // ---------------------------------
+  // ELIMINAR PRODUCTO
+  // ---------------------------------
+  const deleteProduct = () => {
+    showToast("danger", "Producto eliminado correctamente")
+    setModalVisible(false)
+  }
+
+
+
+
+return (
+      
     <>
-      <WidgetsDropdown className="mb-4" />
-      <CCard className="mb-4">
-        <CCardBody>
-          <CRow>
-            <CCol sm={5}>
-              <h4 id="traffic" className="card-title mb-0">
-                Traffic
-              </h4>
-              <div className="small text-body-secondary">January - July 2023</div>
-            </CCol>
-            <CCol sm={7} className="d-none d-md-block">
-              <CButton color="primary" className="float-end">
-                <CIcon icon={cilCloudDownload} />
-              </CButton>
-              <CButtonGroup className="float-end me-3">
-                {['Day', 'Month', 'Year'].map((value) => (
-                  <CButton
-                    color="outline-secondary"
-                    key={value}
-                    className="mx-0"
-                    active={value === 'Month'}
-                  >
-                    {value}
-                  </CButton>
-                ))}
-              </CButtonGroup>
-            </CCol>
-          </CRow>
-          <MainChart />
-        </CCardBody>
-        <CCardFooter>
-          <CRow
-            xs={{ cols: 1, gutter: 4 }}
-            sm={{ cols: 2 }}
-            lg={{ cols: 4 }}
-            xl={{ cols: 5 }}
-            className="mb-2 text-center"
-          >
-            {progressExample.map((item, index, items) => (
-              <CCol
-                className={classNames({
-                  'd-none d-xl-block': index + 1 === items.length,
-                })}
-                key={index}
-              >
-                <div className="text-body-secondary">{item.title}</div>
-                <div className="fw-semibold text-truncate">
-                  {item.value} ({item.percent}%)
-                </div>
-                <CProgress thin className="mt-2" color={item.color} value={item.percent} />
-              </CCol>
+
+    <CCard>
+      <CCardBody>
+        <div className="d-flex justify-content-between mb-4 ">
+        <h4>Productos</h4>
+        <CButton  color="primary" onClick={() => openModal("create")}>
+          Agregar
+          <CIcon className="ms-2" icon={cibAddthis} />
+        </CButton>
+        </div>
+
+
+
+          <CTable align="middle" className="ml-4 mb-4 border" hover responsive>
+            <CTableHead color="Auto">
+              <CTableRow>
+                <CTableHeaderCell>Producto</CTableHeaderCell>
+                <CTableHeaderCell className="text-center">Proveedor</CTableHeaderCell>
+                <CTableHeaderCell>Stock</CTableHeaderCell>
+                <CTableHeaderCell className="text-center">Método</CTableHeaderCell>
+                <CTableHeaderCell>Precio</CTableHeaderCell>
+                <CTableHeaderCell>Ventas</CTableHeaderCell>
+                <CTableHeaderCell>Última venta</CTableHeaderCell>
+                <CTableHeaderCell>Acciones</CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+
+            <CTableBody>
+    {tableExample.map((item, index) => (
+        <CTableRow key={index}>
+          {/* Información del producto */}
+          <CTableDataCell>
+            <div className="fw-semibold">{item.product.name}</div>
+            <div className="small text-body-secondary text-nowrap">
+              {item.product.category}
+            </div>
+          </CTableDataCell>
+
+          {/* Proveedor */}
+          <CTableDataCell className="text-center">
+            <CIcon size="xl" icon={item.supplier.flag} title={item.supplier.name} />
+          </CTableDataCell>
+
+          {/* Stock y fecha de último reabastecimiento */}
+          <CTableDataCell>
+            <div className="d-flex justify-content-between text-nowrap">
+              <div className="fw-semibold">{item.stock.value} uds</div>
+              <div className="ms-3">
+                <small className="text-body-secondary">
+                  {item.stock.lastrestock}
+                </small>
+              </div>
+            </div>
+            <CProgress thin color={item.stock.color} value={item.stock.value} />
+          </CTableDataCell>
+
+          {/* Métodos de pago */}
+          <CTableDataCell className="text-center">
+            {item.payment.icon.map((icono, i) => (
+              <CIcon key={i} size="lg" icon={icono} className="mx-1" />
             ))}
-          </CRow>
-        </CCardFooter>
-      </CCard>
-      <WidgetsBrand className="mb-4" withCharts />
-      <CRow>
-        <CCol xs>
-          <CCard className="mb-4">
-            <CCardHeader>Traffic {' & '} Sales</CCardHeader>
-            <CCardBody>
-              <CRow>
-                <CCol xs={12} md={6} xl={6}>
-                  <CRow>
-                    <CCol xs={6}>
-                      <div className="border-start border-start-4 border-start-info py-1 px-3">
-                        <div className="text-body-secondary text-truncate small">New Clients</div>
-                        <div className="fs-5 fw-semibold">9,123</div>
-                      </div>
-                    </CCol>
-                    <CCol xs={6}>
-                      <div className="border-start border-start-4 border-start-danger py-1 px-3 mb-3">
-                        <div className="text-body-secondary text-truncate small">
-                          Recurring Clients
-                        </div>
-                        <div className="fs-5 fw-semibold">22,643</div>
-                      </div>
-                    </CCol>
-                  </CRow>
-                  <hr className="mt-0" />
-                  {progressGroupExample1.map((item, index) => (
-                    <div className="progress-group mb-4" key={index}>
-                      <div className="progress-group-prepend">
-                        <span className="text-body-secondary small">{item.title}</span>
-                      </div>
-                      <div className="progress-group-bars">
-                        <CProgress thin color="info" value={item.value1} />
-                        <CProgress thin color="danger" value={item.value2} />
-                      </div>
+          </CTableDataCell>
+
+          {/* Precio */}
+          <CTableDataCell>
+            <div className="fw-semibold">{item.price}</div>
+          </CTableDataCell>
+
+          {/* Ventas */}
+          <CTableDataCell>
+            <div className="fw-semibold">{item.sales}</div>
+          </CTableDataCell>
+
+          {/* Última venta */}
+          <CTableDataCell>
+            <div className="small text-body-secondary text-nowrap">Última venta</div>
+            <div className="fw-semibold text-nowrap">{item.lastsale}</div>
+          </CTableDataCell>
+
+        {/* Acciones */}
+        <CTableDataCell>
+          <CButtonGroup role="group" aria-label="Basic example">
+            <CButton color="primary" onClick={() => openModal("edit",item)}>Editar
+            <CIcon className="ms-2" icon={cilPencil} />
+            </CButton>
+
+
+
+
+            
+            <CButton color="danger" onClick={()=> openModal("delete", item)}>Eliminar
+            <CIcon className="ms-2" icon={cilTrash} />  
+            </CButton>
+          </CButtonGroup>
+        </CTableDataCell>
+        
+        </CTableRow>
+      ))}
+
+            </CTableBody>
+          </CTable>
+
+
+
+
+
+      </CCardBody>
+    </CCard>
+
+
+
+
+      {/* --------------------------
+          TOASTER GLOBAL
+      --------------------------- */}
+      <CToaster placement="top-end">
+        {toasts.map(t => (
+          <CToast key={t.id} autohide delay={2500} color={t.type} visible>
+            <CToastHeader closeButton>
+              <strong className="me-auto">{t.message}</strong>
+            </CToastHeader>
+            <CToastBody>
+              ¡Operación realizada con éxito!
+            </CToastBody>
+          </CToast>
+        ))}
+      </CToaster>
+
+
+
+
+
+
+
+
+
+
+
+
+      <CModal
+        size="lg"
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      >
+        <CModalHeader>
+          <CModalTitle>
+            {modalType === "create" && "Registrar Producto"}
+            {modalType === "edit" && "Editar Producto"}
+            {modalType === "delete" && "Eliminar Producto"}
+          </CModalTitle>
+        </CModalHeader>
+
+        <CModalBody>
+
+          {/* ELIMINAR */}
+          {modalType === "delete" && (
+            <>
+              <h5>¿Seguro que deseas eliminar este producto?</h5>
+              <p>{selectedProduct?.product.name}</p>
+
+              <CButton color="danger"  onClick={deleteProduct}>
+                Eliminar
+              </CButton>
+            </>
+          )}
+
+          {/* CREAR / EDITAR */}
+          {(modalType === "create" || modalType === "edit") && (
+            <>
+              <CNav variant="tabs">
+                <CNavItem>
+                  <CNavLink active={step === 1}>Información</CNavLink>
+                </CNavItem>
+                <CNavItem>
+                  <CNavLink active={step === 2}>Inventario</CNavLink>
+                </CNavItem>
+                <CNavItem>
+                  <CNavLink active={step === 3}>Confirmación</CNavLink>
+                </CNavItem>
+              </CNav>
+
+              <CTabContent className="mt-4">
+
+                {/* PASO 1 */}
+                <CTabPane visible={step === 1}>
+                  <CForm>
+                    <CFormInput label="Nombre" placeholder="Nombre" />
+                    <CFormSelect label="Categoría">
+                      <option>Computadores</option>
+                      <option>Accesorios</option>
+                      <option>Ropa</option>
+                    </CFormSelect>
+                    <CButton color= "primary" className='mt-3' onClick={() => setStep(2)}>Siguiente</CButton>
+                  </CForm>
+                </CTabPane>
+
+                {/* PASO 2 */}
+                <CTabPane visible={step === 2}>
+                  <CForm>
+                    <CFormInput label="Precio" type="number" />
+                    <CFormInput label="Stock" type="number" />
+                    <div className="d-flex justify-content-between mt-4">
+                    <CButton color="secondary"onClick={() => setStep(1)}>Atrás</CButton>
+                    <CButton color= "primary" onClick={() => setStep(3)}>Siguiente</CButton>
                     </div>
-                  ))}
-                </CCol>
-                <CCol xs={12} md={6} xl={6}>
-                  <CRow>
-                    <CCol xs={6}>
-                      <div className="border-start border-start-4 border-start-warning py-1 px-3 mb-3">
-                        <div className="text-body-secondary text-truncate small">Pageviews</div>
-                        <div className="fs-5 fw-semibold">78,623</div>
-                      </div>
-                    </CCol>
-                    <CCol xs={6}>
-                      <div className="border-start border-start-4 border-start-success py-1 px-3 mb-3">
-                        <div className="text-body-secondary text-truncate small">Organic</div>
-                        <div className="fs-5 fw-semibold">49,123</div>
-                      </div>
-                    </CCol>
-                  </CRow>
+                    
+                  </CForm>
+                </CTabPane>
 
-                  <hr className="mt-0" />
+                {/* PASO 3 */}
+                <CTabPane visible={step === 3}>
+                  <h5>Confirmar datos</h5>
 
-                  {progressGroupExample2.map((item, index) => (
-                    <div className="progress-group mb-4" key={index}>
-                      <div className="progress-group-header">
-                        <CIcon className="me-2" icon={item.icon} size="lg" />
-                        <span>{item.title}</span>
-                        <span className="ms-auto fw-semibold">{item.value}%</span>
-                      </div>
-                      <div className="progress-group-bars">
-                        <CProgress thin color="warning" value={item.value} />
-                      </div>
+                      <div className="d-flex justify-content-between mt-4">
+                      <CButton color="secondary" onClick={() => setStep(2)}>
+                        Atrás
+                      </CButton>
+
+                      {modalType === "create" && (
+                        <CButton color="success" onClick={saveProduct}>
+                          Guardar
+                        </CButton>
+                      )}
+
+                      
+                      {modalType === "edit" && (
+                      <CButton color="primary" onClick={updateProduct}>
+                        Actualizar
+                      </CButton>
+                      )}
                     </div>
-                  ))}
+              
+  
+                </CTabPane>
 
-                  <div className="mb-5"></div>
+              </CTabContent>
+            </>
+          )}
 
-                  {progressGroupExample3.map((item, index) => (
-                    <div className="progress-group" key={index}>
-                      <div className="progress-group-header">
-                        <CIcon className="me-2" icon={item.icon} size="lg" />
-                        <span>{item.title}</span>
-                        <span className="ms-auto fw-semibold">
-                          {item.value}{' '}
-                          <span className="text-body-secondary small">({item.percent}%)</span>
-                        </span>
-                      </div>
-                      <div className="progress-group-bars">
-                        <CProgress thin color="success" value={item.percent} />
-                      </div>
-                    </div>
-                  ))}
-                </CCol>
-              </CRow>
+        </CModalBody>
+      </CModal>
 
-              <br />
 
-              <CTable align="middle" className="mb-0 border" hover responsive>
-                <CTableHead className="text-nowrap">
-                  <CTableRow>
-                    <CTableHeaderCell className="bg-body-tertiary text-center">
-                      <CIcon icon={cilPeople} />
-                    </CTableHeaderCell>
-                    <CTableHeaderCell className="bg-body-tertiary">User</CTableHeaderCell>
-                    <CTableHeaderCell className="bg-body-tertiary text-center">
-                      Country
-                    </CTableHeaderCell>
-                    <CTableHeaderCell className="bg-body-tertiary">Usage</CTableHeaderCell>
-                    <CTableHeaderCell className="bg-body-tertiary text-center">
-                      Payment Method
-                    </CTableHeaderCell>
-                    <CTableHeaderCell className="bg-body-tertiary">Activity</CTableHeaderCell>
-                  </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                  {tableExample.map((item, index) => (
-                    <CTableRow v-for="item in tableItems" key={index}>
-                      <CTableDataCell className="text-center">
-                        <CAvatar size="md" src={item.avatar.src} status={item.avatar.status} />
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <div>{item.user.name}</div>
-                        <div className="small text-body-secondary text-nowrap">
-                          <span>{item.user.new ? 'New' : 'Recurring'}</span> | Registered:{' '}
-                          {item.user.registered}
-                        </div>
-                      </CTableDataCell>
-                      <CTableDataCell className="text-center">
-                        <CIcon size="xl" icon={item.country.flag} title={item.country.name} />
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <div className="d-flex justify-content-between text-nowrap">
-                          <div className="fw-semibold">{item.usage.value}%</div>
-                          <div className="ms-3">
-                            <small className="text-body-secondary">{item.usage.period}</small>
-                          </div>
-                        </div>
-                        <CProgress thin color={item.usage.color} value={item.usage.value} />
-                      </CTableDataCell>
-                      <CTableDataCell className="text-center">
-                        <CIcon size="xl" icon={item.payment.icon} />
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <div className="small text-body-secondary text-nowrap">Last login</div>
-                        <div className="fw-semibold text-nowrap">{item.activity}</div>
-                      </CTableDataCell>
-                    </CTableRow>
-                  ))}
-                </CTableBody>
-              </CTable>
-            </CCardBody>
-          </CCard>
-        </CCol>
-      </CRow>
+
     </>
   )
 }
+
 
 export default Dashboard
