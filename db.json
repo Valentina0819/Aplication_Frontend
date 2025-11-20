@@ -1,0 +1,114 @@
+{
+  "products": [
+    {
+      "id": "fc61",
+      "Nombre": "LAPTOP 5",
+      "Categoria": "Tecnología",
+      "Estatus": "Disponible",
+      "Cantidad": "20",
+      "Precio_Unit": "120"
+    },
+    {
+      "id": "b8e1",
+      "Nombre": "Samsung 23412",
+      "Categoria": "Tecnología",
+      "Estatus": "Disponible",
+      "Cantidad": "100",
+      "Precio_Unit": "1000"
+    },
+    {
+      "id": "865e",
+      "Nombre": "Iphone",
+      "Categoria": "Tecnología",
+      "Estatus": "Disponible",
+      "Cantidad": "12312",
+      "Precio_Unit": "1110$"
+    },
+    {
+      "id": "58be",
+      "Nombre": "mueble",
+      "Categoria": "Mobiliario",
+      "Estatus": "Disponible",
+      "Cantidad": "1212",
+      "Precio_Unit": "100$"
+    }
+  ],
+  "pedidos": [
+    {
+      "id": "cf68",
+      "cliente": "assadd",
+      "rif": "asdasdd",
+      "direccionFactura": "asdas",
+      "direccionEntrega": "asdas",
+      "sucursal": "asdas",
+      "fechaCancelacion": "32121-12-12",
+      "expiracion": "12321-02-11",
+      "terminosPago": "Contado",
+      "tasa": "asdasd",
+      "transporte": "asdas",
+      "lines": [
+        {
+          "id": 1763651307075,
+          "productoId": "fc61",
+          "nombre": "LAPTOP 5",
+          "categoria": "Tecnología",
+          "precio": 120,
+          "cantidad": 12,
+          "subtotal": 1440
+        },
+        {
+          "id": 1763651331059,
+          "productoId": "b8e1",
+          "nombre": "Samsung 23412",
+          "categoria": "Tecnología",
+          "precio": 1000,
+          "cantidad": 3,
+          "subtotal": 3000
+        }
+      ],
+      "fechaCreacion": "2025-11-20T15:08:57.660Z"
+    }
+  ],
+  "facturas": [
+    {
+      "id": "6725",
+      "pedidoId": "cf68",
+      "productos": [
+        {
+          "nombre": "LAPTOP 5",
+          "cantidad": 12,
+          "precio": 120
+        },
+        {
+          "nombre": "Samsung 23412",
+          "cantidad": 3,
+          "precio": 1000
+        }
+      ],
+      "subtotal": 4440,
+      "impuesto": 710.4,
+      "total": 5150.4,
+      "fecha": "2025-11-20T15:09:46.638Z"
+    },
+    {
+      "id": "a91a",
+      "pedidoId": "cf68",
+      "productos": [
+        {
+          "nombre": "LAPTOP 5",
+          "cantidad": 12,
+          "precio": 120
+        },
+        {
+          "nombre": "Samsung 23412",
+          "cantidad": 3,
+          "precio": 1000
+        }
+      ],
+      "subtotal": 4440,
+      "impuesto": 710.4,
+      "total": 5150.4,
+      "fecha": "2025-11-20T15:24:05.216Z"
+    }
+  ]
+}
