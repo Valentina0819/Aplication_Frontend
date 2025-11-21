@@ -55,12 +55,12 @@ const _nav = [
 
   {
     component: CNavGroup,
-    name: 'FACTURACION',
+    name: 'Facturacion',
     icon:<CIcon icon={cilCash} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name:'FACTURACION',
+        name:'Facturacion',
         to:'/Facturacion'
       }
     ]
