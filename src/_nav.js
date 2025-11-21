@@ -66,7 +66,7 @@ const _nav = [
     ]
   },
 
-  {
+/*  {
     component: CNavGroup,
     name: 'Reportes y Estadísticas',
     icon: <CIcon icon={cilReportSlash} customClassName="nav-icon" />,
@@ -79,6 +79,8 @@ const _nav = [
     ],
   },
 
+  Provisional Falta implementar esta logica
+*/
   {
     component: CNavGroup,
     name: 'Login',

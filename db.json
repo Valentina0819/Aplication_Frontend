@@ -1,4 +1,18 @@
 {
+  "users": [
+    {
+      "id": "4a42",
+      "username": "HumanIV",
+      "email": "HumanIV",
+      "password": "admin1234"
+    },
+    {
+      "id": "084f",
+      "username": "HumanV",
+      "email": "Anfer",
+      "password": "123"
+    }
+  ],
   "products": [
     {
       "id": "fc61",
@@ -110,5 +124,6 @@
       "total": 5150.4,
       "fecha": "2025-11-20T15:24:05.216Z"
     }
-  ]
+  ],
+  "reportes": []
 }

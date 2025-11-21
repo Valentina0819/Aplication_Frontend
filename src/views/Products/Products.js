@@ -50,6 +50,7 @@
     const [modalType, setModalType] = useState(null)
     const [step, setStep] = useState(1)
 
+    
     // FORM STATE
     const [formData, setFormData] = useState({
         Nombre: "",

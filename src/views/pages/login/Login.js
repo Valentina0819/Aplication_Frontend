@@ -1,39 +1,115 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import {
-  CButton,
-  CCard,
-  CCardBody,
-  CCardGroup,
-  CCol,
-  CContainer,
-  CForm,
-  CFormInput,
-  CInputGroup,
-  CInputGroupText,
-  CRow,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilLockLocked, cilUser } from '@coreui/icons'
+  import React, { useState } from 'react'
+  import { Link, useNavigate } from 'react-router-dom'
+  import {
+    CButton,
+    CCard,
+    CCardBody,
+    CCol,
+    CContainer,
+    CForm,
+    CFormInput,
+    CInputGroup,
+    CInputGroupText,
+    CRow,
+    CToaster,
+    CToast,
+    CToastHeader,
+    CToastBody,
+  } from '@coreui/react'
+  import CIcon from '@coreui/icons-react'
+  import { cilLockLocked, cilUser } from '@coreui/icons'
 
-const Login = () => {
-  return (
-    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
-      <CContainer>
-        <CRow className="justify-content-center">
-          <CCol md={8}>
-            <CCardGroup>
+  import logoPersonalizado from '../../../assets/images/3512698.png'
+
+  const Login = () => {
+
+    const navigate = useNavigate()
+
+    // ---------- TOAST ----------
+    const [toasts, setToasts] = useState([])
+    const showToast = (type, message) => {
+      setToasts((prev) => [...prev, { id: Date.now(), type, message }])
+    }
+
+    // ---------- FORM ----------
+    const [formData, setFormData] = useState({
+      username: '',
+      password: '',
+    })
+
+    const handleChange = (e) => {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+      })
+    }
+
+    const API = 'http://localhost:4000/users'
+
+    // ---------- LOGIN ----------
+    const loginUser = async () => {
+      const { username, password } = formData
+
+      if (!username || !password) {
+        showToast('danger', 'Todos los campos son obligatorios')
+        return
+      }
+
+      try {
+        const res = await fetch(`${API}?username=${username}&password=${password}`)
+        const data = await res.json()
+
+        if (data.length > 0) {
+          // Usuario encontrado → Iniciar sesión
+          localStorage.setItem('user', JSON.stringify(data[0]))
+          showToast('success', `Bienvenido ${data[0].username}`)
+
+          // Redireccionar
+          setTimeout(() => navigate('/dashboard'), 1000)
+        } else {
+          showToast('danger', 'Usuario o contraseña incorrectos')
+        }
+      } catch (error) {
+        console.error(error)
+        showToast('danger', 'Error conectando con el servidor')
+      }
+    }
+
+    return (
+      <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
+        <CContainer>
+          <CRow className="justify-content-center">
+            <CCol md={6}>
               <CCard className="p-4">
-                <CCardBody>
-                  <CForm>
-                    <h1>Login</h1>
-                    <p className="text-body-secondary">Sign In to your account</p>
+                <CCardBody className="d-flex flex-column align-items-center">
+                  <img
+                    src={logoPersonalizado}
+                    height={60}
+                    alt="Logo personalizado"
+                    className="mb-4"
+                  />
+
+                  <CForm className="w-100">
+                    <h1 className="text-center">Login</h1>
+                    <p className="text-body-secondary text-center">
+                      Sign In to your account
+                    </p>
+
+                    {/* Username */}
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" />
+                      <CFormInput
+                        placeholder="Username"
+                        name="username"
+                        value={formData.username}
+                        onChange={handleChange}
+                        autoComplete="username"
+                      />
                     </CInputGroup>
+
+                    {/* Password */}
                     <CInputGroup className="mb-4">
                       <CInputGroupText>
                         <CIcon icon={cilLockLocked} />
@@ -41,46 +117,56 @@ const Login = () => {
                       <CFormInput
                         type="password"
                         placeholder="Password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
                         autoComplete="current-password"
                       />
                     </CInputGroup>
-                    <CRow>
+
+                    {/* Buttons */}
+                    <CRow className="mb-3">
                       <CCol xs={6}>
-                        <CButton color="primary" className="px-4">
+                        <CButton color="primary" className="w-100" onClick={loginUser}>
                           Login
                         </CButton>
                       </CCol>
-                      <CCol xs={6} className="text-right">
-                        <CButton color="link" className="px-0">
-                          Forgot password?
-                        </CButton>
+
+                      <CCol xs={6}>
+                        <Link to="/register">
+                          <CButton color="secondary" className="w-100">
+                            Register Now!
+                          </CButton>
+                        </Link>
                       </CCol>
                     </CRow>
+
+                    {/* Forgot password */}
+                    <div className="text-end">
+                      <CButton color="link" className="px-0">
+                        Forgot password?
+                      </CButton>
+                    </div>
                   </CForm>
                 </CCardBody>
               </CCard>
-              <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
-                <CCardBody className="text-center">
-                  <div>
-                    <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
-                      </CButton>
-                    </Link>
-                  </div>
-                </CCardBody>
-              </CCard>
-            </CCardGroup>
-          </CCol>
-        </CRow>
-      </CContainer>
-    </div>
-  )
-}
+            </CCol>
+          </CRow>
 
-export default Login
+          {/* TOAST */}
+          <CToaster placement="top-end">
+            {toasts.map((t) => (
+              <CToast key={t.id} autohide delay={2600} color={t.type} visible>
+                <CToastHeader closeButton>
+                  <strong>{t.message}</strong>
+                </CToastHeader>
+                <CToastBody>Operación realizada correctamente.</CToastBody>
+              </CToast>
+            ))}
+          </CToaster>
+        </CContainer>
+      </div>
+    )
+  }
+
+  export default Login
