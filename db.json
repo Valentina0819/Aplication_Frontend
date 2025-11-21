@@ -11,6 +11,59 @@
       "username": "HumanV",
       "email": "Anfer",
       "password": "123"
+    },
+    {
+      "id": "a78d",
+      "username": "Angel",
+      "email": "HumanV",
+      "password": "111"
+    },
+    {
+      "id": "f2a2",
+      "username": "ANGELASDASDA",
+      "email": "ADMIN ",
+      "password": "ADMIN123",
+      "role": "administrador"
+    },
+    {
+      "id": "09f0",
+      "username": "fernando",
+      "email": "Anfer09@gmaill.com",
+      "password": "111",
+      "role": "administrador"
+    },
+    {
+      "id": "aa09",
+      "username": "fermina",
+      "email": "fer@gmail.com",
+      "password": "123",
+      "role": "empleado"
+    }
+  ],
+  "clients": [
+    {
+      "id": "1",
+      "nombre": "Empresa A",
+      "rif": "J-12345678-9",
+      "direccionFactura": "Av. Principal",
+      "direccionEntrega": "Zona Industrial",
+      "sucursal": "Caracas"
+    },
+    {
+      "id": "2",
+      "nombre": "Cliente B",
+      "rif": "V-99988877",
+      "direccionFactura": "Calle 10",
+      "direccionEntrega": "Centro",
+      "sucursal": "Valencia"
+    },
+    {
+      "id": "1aee",
+      "nombre": "Ángel",
+      "rif": "J-12345678-9",
+      "direccion": "1211",
+      "sucursal": "Caracas",
+      "telefono": "1012121"
     }
   ],
   "products": [
@@ -36,7 +89,7 @@
       "Categoria": "Tecnología",
       "Estatus": "Disponible",
       "Cantidad": "12312",
-      "Precio_Unit": "1110$"
+      "Precio_Unit": "1110"
     },
     {
       "id": "58be",
@@ -44,49 +97,41 @@
       "Categoria": "Mobiliario",
       "Estatus": "Disponible",
       "Cantidad": "1212",
-      "Precio_Unit": "100$"
+      "Precio_Unit": "100 "
     }
   ],
   "pedidos": [
     {
-      "id": "cf68",
-      "cliente": "assadd",
-      "rif": "asdasdd",
-      "direccionFactura": "asdas",
-      "direccionEntrega": "asdas",
-      "sucursal": "asdas",
-      "fechaCancelacion": "32121-12-12",
-      "expiracion": "12321-02-11",
-      "terminosPago": "Contado",
-      "tasa": "asdasd",
-      "transporte": "asdas",
+      "id": "bdb0",
+      "clienteId": 1,
+      "cliente": "Empresa A",
+      "rif": "J-12345678-9",
+      "direccionFactura": "Av. Principal",
+      "direccionEntrega": "Zona Industrial",
+      "sucursal": "",
+      "fechaCancelacion": "",
+      "expiracion": "",
+      "terminosPago": "Opcional",
+      "tasa": "",
+      "transporte": "",
       "lines": [
         {
-          "id": 1763651307075,
+          "id": 1763701292972,
           "productoId": "fc61",
           "nombre": "LAPTOP 5",
           "categoria": "Tecnología",
           "precio": 120,
-          "cantidad": 12,
-          "subtotal": 1440
-        },
-        {
-          "id": 1763651331059,
-          "productoId": "b8e1",
-          "nombre": "Samsung 23412",
-          "categoria": "Tecnología",
-          "precio": 1000,
           "cantidad": 3,
-          "subtotal": 3000
+          "subtotal": 360
         }
       ],
-      "fechaCreacion": "2025-11-20T15:08:57.660Z"
+      "fechaCreacion": "2025-11-21T05:01:39.408Z"
     }
   ],
   "facturas": [
     {
       "id": "6725",
-      "pedidoId": "cf68",
+      "pedidoId": null,
       "productos": [
         {
           "nombre": "LAPTOP 5",
@@ -106,7 +151,7 @@
     },
     {
       "id": "a91a",
-      "pedidoId": "cf68",
+      "pedidoId": null,
       "productos": [
         {
           "nombre": "LAPTOP 5",
@@ -123,6 +168,21 @@
       "impuesto": 710.4,
       "total": 5150.4,
       "fecha": "2025-11-20T15:24:05.216Z"
+    },
+    {
+      "id": "1053",
+      "pedidoId": "bdb0",
+      "productos": [
+        {
+          "nombre": "LAPTOP 5",
+          "cantidad": 3,
+          "precio": 120
+        }
+      ],
+      "subtotal": 360,
+      "impuesto": 57.6,
+      "total": 417.6,
+      "fecha": "2025-11-21T05:02:11.636Z"
     }
   ],
   "reportes": []

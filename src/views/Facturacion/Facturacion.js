@@ -265,8 +265,6 @@
                 <p><strong>Dirección Factura:</strong> {pedidoDatos.direccionFactura}</p>
                 <p><strong>Dirección Entrega:</strong> {pedidoDatos.direccionEntrega}</p>
                 <p><strong>Sucursal:</strong> {pedidoDatos.sucursal}</p>
-                <p><strong>Fecha Cancelación:</strong> {pedidoDatos.fechaCancelacion}</p>
-                <p><strong>Expiración:</strong> {pedidoDatos.expiracion}</p>
                 <p><strong>Términos de Pago:</strong> {pedidoDatos.terminosPago}</p>
                 <p><strong>Tasa:</strong> {pedidoDatos.tasa}</p>
                 <p><strong>Transporte:</strong> {pedidoDatos.transporte}</p>

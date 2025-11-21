@@ -56,19 +56,18 @@
       }
 
       try {
-        const res = await fetch(`${API}?username=${username}&password=${password}`)
-        const data = await res.json()
+      const res = await fetch(`${API}?username=${username}`)
+      const data = await res.json()
 
-        if (data.length > 0) {
-          // Usuario encontrado → Iniciar sesión
-          localStorage.setItem('user', JSON.stringify(data[0]))
-          showToast('success', `Bienvenido ${data[0].username}`)
 
-          // Redireccionar
-          setTimeout(() => navigate('/dashboard'), 1000)
-        } else {
-          showToast('danger', 'Usuario o contraseña incorrectos')
-        }
+      const user = data.find(u => u.password === password)
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user))
+        showToast("success", `Bienvenido ${user.username}`)
+        setTimeout(() => navigate("/dashboard"), 1000)
+      } else {
+        showToast("danger", "Usuario o contraseña incorrectos")
+      }
       } catch (error) {
         console.error(error)
         showToast('danger', 'Error conectando con el servidor')
@@ -133,7 +132,7 @@
                       </CCol>
 
                       <CCol xs={6}>
-                        <Link to="/register">
+                        <Link to="/users">
                           <CButton color="secondary" className="w-100">
                             Register Now!
                           </CButton>

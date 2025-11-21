@@ -8,3 +8,5 @@ Comandos importantes para echar andar el proyecto
 
 
 
+-Se agrego la funcionalidad del modulo inicio y register ahora cada que te registres puedes hacer que inices session como tambien se creo un pseudo modulo de inicio en el cual hay 3 cards con botones que te llevan a los modulos (facturacion,pedidos,producto)
+

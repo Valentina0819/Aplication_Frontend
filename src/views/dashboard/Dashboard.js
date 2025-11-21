@@ -1,88 +1,51 @@
 import React from 'react'
-import classNames from 'classnames'
-import { useState } from 'react'
-
-import {
-  CAvatar,
-  CButton,
-  CButtonGroup,
-  CCard,
-  CCardBody,
-  CCardFooter,
-  CCardHeader,
-  CProgress,
-  CRow,
-  CTable,
-  CTableBody,
-  CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow,
-  CAlert,
-  CAlertHeading,
-  CToast,
-  CToastBody,
-  CToaster,
-  CToastHeader,
-  CContainer,
-} from '@coreui/react'
-
-import CIcon from '@coreui/icons-react'
-
-import {
-  cibCcAmex,
-  cibCcApplePay,
-  cibCcMastercard,
-  cifBr,
-  cifUs,
-  cifKr,
-  cifCn,
-  cilPencil,
-  cifIt,
-  cibAddthis,
-  cilTrash
-} from '@coreui/icons'
-
-import {
-  CModalFooter,
-  CNav,
-  CNavItem,
-  CNavLink,
-  CTabContent,
-  CTabPane,
-} from '@coreui/react'
-
-import { CModal, CModalBody, CModalHeader, CModalTitle } from '@coreui/react'
-import {CForm, CFormInput, CFormSelect } from '@coreui/react'
+import { CContainer, CRow, CCol, CCard, CCardBody, CCardHeader, CButton } from '@coreui/react'
 import { Link } from 'react-router-dom'
 
+const Dashboard = () => {
+  return (
+    <CContainer className="mt-4">
 
+      <CRow className="g-4">
+        {/* CARD 1 */}
+        <CCol md={4}>
+          <CCard className="text-center shadow-sm">
+            <CCardHeader>Gestión de Usuarios</CCardHeader>
+            <CCardBody>
+              <Link to="/usuarios">
+                <CButton color="primary">Entrar</CButton>
+              </Link>
+            </CCardBody>
+          </CCard>
+        </CCol>
 
+        {/* CARD 2 */}
+        <CCol md={4}>
+          <CCard className="text-center shadow-sm">
+            <CCardHeader>Gestión de Roles</CCardHeader>
+            <CCardBody>
+              <Link to="/roles">
+                <CButton color="primary">Entrar</CButton>
+              </Link>
+            </CCardBody>
+          </CCard>
+        </CCol>
 
+        {/* CARD 3 */}
+        <CCol md={4}>
+          <CCard className="text-center shadow-sm">
+            <CCardHeader>Permisos</CCardHeader>
+            <CCardBody>
+              <Link to="/permisos">
+                <CButton color="primary">Entrar</CButton>
+              </Link>
+            </CCardBody>
+          </CCard>
+        </CCol>
+      </CRow>
 
-
-export const Dashboard  = () => {
-
-
-return (
-      
-    <>
-    <CContainer>
-      <CCard>
-        <CCardHeader>TITULO</CCardHeader>
-        <CCardBody>
-          <Link>
-            <CButton>
-              HOLA HOLA
-            </CButton>
-          </Link>
-        </CCardBody>
-      </CCard>
     </CContainer>
-
-    </>
   )
 }
-
 
 export default Dashboard
